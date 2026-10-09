@@ -1,0 +1,26 @@
+name: Build DeepHat APK
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get project files
+        uses: actions/checkout@v4
+
+      - name: Build APK
+        uses: ArtemSBulgakov/buildozer-action@v1
+
+      - name: Save APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: DeepHat-APK
+          path: bin/*.apk
+          if-no-files-found: error
